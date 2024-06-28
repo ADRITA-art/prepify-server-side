@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/usersModel.mjs';
-import geminiService from '../services/geminiServices.mjs';
+/*import geminiService from '../services/geminiServices.mjs';*/
 import { AxiosError } from 'axios';
 
 const register = async (req, res) => {

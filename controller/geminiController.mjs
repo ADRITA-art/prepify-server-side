@@ -1,11 +1,11 @@
-import User from '../models/usersModel.mjs';
+/*import User from '../models/usersModel.mjs';
 import geminiServices from '../services/geminiServices.mjs';
 const topic=["react","node","css"];
                       for(var i=0;i<topic.length;i++){
                         await geminiServices(topic[i]);
                         console.log("done");
                         }
-                        console.log("sad");
+                        console.log("sad");*/
                         
 
 /*const create = async (req, res) => {
