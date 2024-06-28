@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "dev": "nodemon index.mjs"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.mjs",
+    "start": "node index.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.13.0",
