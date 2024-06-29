@@ -1,20 +1,20 @@
 import jwt from 'jsonwebtoken';
-const SECRET_KEY = "QUARTER";
+
+const SECRET_KEY = "secret"; 
 
 const auth = (req, res, next) => {
   try {
-    var token = req.headers.authorization;
+    let token = req.headers.authorization;
     if (token) {
       token = token.split(" ")[1];
-      var user = jwt.verify(token, SECRET_KEY);
+      const user = jwt.verify(token, SECRET_KEY);
       req.userId = user.id;
     } else {
-      res.status(401).json({ success: false, message: "Unauthorized User" });
+      return res.status(401).json({ success: false, message: "Unauthorized User" });
     }
-
     next();
   } catch (error) {
-    console.log(error);
+    console.log("Token verification error:", error);
     res.status(401).json({ success: false, message: "Unauthorized User" });
   }
 };

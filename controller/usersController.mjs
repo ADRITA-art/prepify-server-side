@@ -64,16 +64,22 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        const token = jwt.sign({ email: user.email },"secret");
-        res.json({ message: 'Login successful'});
+        const token = jwt.sign({ email: user.email ,id:user.id },"secret");
+
+        res.status(201).json({
+            succes: true,
+            statusCode:201,
+            token: token
+        })
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 const userById = async (req, res) => {
     try {
-      const userId = req.params.id;
+      const userId = req.params.userId;
   
       if (!userId) {
         return res.status(400).json({ message: 'User ID is required' });
