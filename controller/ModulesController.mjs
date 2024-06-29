@@ -22,7 +22,32 @@ export const generateContentForInterests = async (req, res) => {
   }
 
   
-    const prompt = `Create an engaging and attractive study module about ${interest} for students. Include interactive content and images if possible.`;
+    const prompt = `Create an engaging and attractive study module about ${interest} for students. Include interactive content and images if possible.  At the end of the module, you need to create a multiple-choice quiz with 3 questions. Each question should have 4 options and one correct answer. 
+
+Please provide the questions, options, and answers in the following format:
+
+{
+  questions: [
+    {
+      question: "What is the capital of France?",
+      options: ["A) Paris", "B) London", "C) Rome", "D) Berlin"],
+      answer: "A"
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["A) Earth", "B) Mars", "C) Jupiter", "D) Venus"],
+      answer: "B"
+    },
+    {
+      question: "What is the largest ocean on Earth?",
+      options: ["A) Atlantic Ocean", "B) Indian Ocean", "C) Southern Ocean", "D) Pacific Ocean"],
+      answer: "D"
+    }
+  ]
+}
+`;
+
+
             try{      
     const modelResponse = await model.invoke(prompt);
                   
