@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/usersModel.mjs';
+import mongoose from 'mongoose';
 /*import geminiService from '../services/geminiServices.mjs';*/
 import { AxiosError } from 'axios';
 
@@ -70,4 +71,26 @@ const login = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-export default { register, login };
+const userById = async (req, res) => {
+    try {
+      const userId = req.query.id;
+  
+      if (!userId) {
+        return res.status(400).json({ message: 'User ID is required' });
+      }
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: 'Invalid User ID format' });
+      }
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.json(user);
+    } catch (error) {
+      console.error('Error fetching user by ID:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+export default { register, login ,userById};
