@@ -73,7 +73,7 @@ const login = async (req, res) => {
 };
 const userById = async (req, res) => {
     try {
-      const userId = req.query.id;
+      const userId = req.params.id;
   
       if (!userId) {
         return res.status(400).json({ message: 'User ID is required' });

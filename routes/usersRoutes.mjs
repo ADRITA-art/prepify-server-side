@@ -4,6 +4,6 @@ import userController from '../controller/usersController.mjs';
 
 router.post('/register', userController.register);
 router.post('/login', userController.login);
-router.get('/userId',userController.userById);
+router.get('/userId/:userId',userController.userById);
 
 export default router;
