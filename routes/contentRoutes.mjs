@@ -1,9 +1,9 @@
 import express from 'express';
 import auth from '../middlewares/auth.mjs'
-import { generateContent } from '../controller/ModulesController.mjs';
+import { generateContentForInterests } from '../controller/ModulesController.mjs';
 
 const router = express.Router();
 
-router.post('/generateContent', auth, generateContent);
+router.post('/generateContent', auth, generateContentForInterests);
 
 export default router;

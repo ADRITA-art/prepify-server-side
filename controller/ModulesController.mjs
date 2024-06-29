@@ -1,48 +1,34 @@
-import 'dotenv/config';
-import mongoose from 'mongoose';
-import User from '../models/usersModel.mjs';
-import { ChatAnthropic } from '@langchain/anthropic';
 
-const model = new ChatAnthropic({
-                        apiKey: process.env.ANTHROPIC_API_KEY,
-                        model: "claude-3-5-sonnet-20240620",
-                        maxTokens: 1024,
-                        temperature: 0.9,
-});
+import { ChatFireworks } from "@langchain/community/chat_models/fireworks";
+import dotenv from 'dotenv';
 
-const generateContentForInterests = async (interests) => {
-                        const modules = [];
-                        for (const interest of interests) {
-                                                const response = await model.invoke(`Create a module about ${interest}.`);
-                                                modules.push({
-                                                                        interest,
-                                                                        content: response,
-                                                });
-                        }
-                        return modules;
-};
+dotenv.config();
 
-export const generateContent = async (req, res) => {
-                        const userId = req.userId;
-                        console.log("User ID from token:", userId);
-                        if (!mongoose.Types.ObjectId.isValid(userId)) {
-                                                return res.status(400).json({ message: 'Invalid User ID format' });
-                        }
+const model = new ChatFireworks({
+                        apiKey: process.env.FIREWORKS_API_URL,
+                        model: "accounts/fireworks/models/llama-v3-70b-instruct",
+                            max_tokens: 1024,
+                            top_p: 1,
+                            top_k: 40,
+                            presence_penalty: 0,
+                            frequency_penalty: 0,
+                            temperature: 0.6,
+                        });
+                        
+export const generateContentForInterests = async (req, res) => {
+  const { interest } = req.body;
+  if (!interest) {
+    return res.status(400).send('Interest is required');
+  }
 
-                        try {
-                                                const user = await User.findById(userId);
-                                                if (!user) {
-                                                                        return res.status(404).json({ message: 'User not found' });
-                                                }
-
-                                                const userModules = await generateContentForInterests(user.aoi);
-                                                res.json({
-                                                                        userId: user._id,
-                                                                        name: user.name,
-                                                                        modules: userModules,
-                                                });
-                        } catch (error) {
-                                                console.error('Error generating content:', error);
-                                                res.status(500).json({ message: 'Server error' });
-                        }
-};
+  
+    const prompt = `Create an engaging and attractive study module about ${interest} for students. Include interactive content and images if possible.`;
+            try{      
+    const modelResponse = await model.invoke(prompt);
+                  
+                      res.status(200).json({ content: modelResponse });
+                    } catch (error) {
+                      console.error('Error generating content:', error);
+                      res.status(500).send('Failed to generate content');
+                    }
+                  };
