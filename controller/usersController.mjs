@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/usersModel.mjs';
 import mongoose from 'mongoose';
-/*import geminiService from '../services/geminiServices.mjs';*/
 import { AxiosError } from 'axios';
 
 const register = async (req, res) => {
@@ -34,15 +33,14 @@ aoi
         });
 
         await newUser.save();
+        const token = jwt.sign({ email: newUser.email ,id:newUser.id },"secret");
+        res.status(201).json({
+            succes: true,
+            statusCode:201,
+            token: token
+        });
+        
 
- /*       for(var i=0;i<aoi.length;i++){
-            await geminiService(aoi[i]);
-            console.log("done");
-            }
-            console.log("sad");*/
-
-
-        res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal server error' });
