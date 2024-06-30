@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import connectDB from './config/database.mjs';
 import userRoutes from './routes/usersRoutes.mjs';
 import generateRoutes from './routes/contentRoutes.mjs'
+import generateQuiz from './routes/quizRoutes.mjs'
+
 import cors from 'cors';
 
 
@@ -23,6 +25,8 @@ app.use (
 
 app.use('/api/users', userRoutes);
 app.use('/api/generate',generateRoutes);
+app.use('/api/Quiz',generateQuiz);
+
 app.get('/', (req, res) => {
  res.send('Hello World');
  });
