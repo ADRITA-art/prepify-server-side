@@ -22,7 +22,7 @@ export const generateContentForInterests = async (req, res) => {
   }
 
   
-    const prompt = `Create an engaging and attractive study module about ${interest} for students. Include interactive content .`;
+    const prompt = ` Provide detailed module based information on ${interest}  for beginners`;
 
 
             try{      
